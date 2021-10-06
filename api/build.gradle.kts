@@ -14,9 +14,6 @@ android {
         targetSdk = Versions.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
@@ -32,12 +29,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
-    }
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -45,34 +36,18 @@ android {
     }
 }
 
+
 dependencies {
+    implementation(project(":core"))
+
     implementation(AndroidX.coreKtx)
-    implementation(AndroidX.appCompat)
-    implementation(AndroidX.lifecycle)
-    implementation(AndroidX.activity)
-    implementation(Android.material)
-
-    implementation(Compose.material)
-    implementation(Compose.runtime)
-    implementation(Compose.toolingPreview)
-    implementation(Compose.ui)
-    implementation(Compose.livedata)
-    implementation(Compose.rxjava)
-    debugImplementation(Compose.toolingDebug)
-
-    implementation(Navigation.navCompose)
-    implementation(Navigation.navHilt)
-
-    implementation(Room.ktx)
-    implementation(Room.runtime)
-    implementation(Room.rxjava3)
-    kapt(Room.compiler)
 
     implementation(Hilt.android)
     kapt(Hilt.compiler)
 
     implementation(RxJava3.rxjava)
     implementation(RxJava3.rxandroid)
+
     implementation(platform(Firebase.bom))
     implementation(Firebase.auth)
 }

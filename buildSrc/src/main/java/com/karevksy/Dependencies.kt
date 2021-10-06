@@ -1,3 +1,4 @@
+
 object Versions {
     const val minSdk = 24
     const val targetSdk = 31
@@ -5,6 +6,8 @@ object Versions {
     const val versionCode = 1
     const val versionName = "1.0"
 
+    const val firebaseBom = "28.4.2"
+    const val firebaseServices = "4.3.10"
     const val kotlin = "1.5.30"
     const val coreKtx = "1.5.0"
     const val appcompat = "1.3.1"
@@ -68,4 +71,11 @@ object Compose {
     const val rxjava = "androidx.compose.runtime:runtime-rxjava3:${Versions.compose}"
     const val toolingDebug = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val compiler = "androidx.compose.compiler:compiler:${Versions.compose}"
+    const val icons = "androidx.compose.material:material-icons-extended:${Versions.compose}"
+}
+
+object Firebase {
+    const val services = "com.google.gms:google-services:${Versions.firebaseServices}"
+    const val bom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
+    const val auth = "com.google.firebase:firebase-auth-ktx"
 }

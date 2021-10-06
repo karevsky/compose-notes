@@ -2,16 +2,13 @@ package com.karevksy.notes.features.notes
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.karevksy.core.extensions.addToDisposable
 import com.karevksy.core.extensions.androidAsync
-import com.karevksy.domain.model.dto.Note
+import com.karevksy.core.model.dto.Note
 import com.karevksy.domain.useCase.NoteUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,84 +20,91 @@ class NotesViewModel @Inject constructor(
     private val _state = mutableStateOf(NotesState())
     val state: State<NotesState> = _state
 
-    private val _uiLiveData = MutableLiveData<String>()
-    val uiLiveData: LiveData<String> = _uiLiveData
-
     private var recentlyDeletedNote: Note? = null
 
     init {
-        disposable.add(
-            addNote(Note(
-                    0,
-                    title = "Title",
-                    content = "Content",
-                    timestamp = 203920,
-                    isFixed = true
-                ))
+        _state.value.isLoading = true
+        addNote(
+            Note(
+                0,
+                title = "Поработать",
+                content = "Петпроектик",
+                timestamp = 203920,
+                isFixed = false
+            )
         )
-        disposable.add(
-            addNote(Note(
-                1,
-                title = "Title",
-                content = "ContentContentContentContentContentContentContentContentContentContentContentContentContentContentContentContentContent",
+        addNote(
+            Note(
+                3,
+                title = "Покушкать",
+                content = "Надо покушкать и заказать еды. Например: " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс, " +
+                        "макдональдс",
                 timestamp = 203920,
                 isFixed = true
-            ))
+            )
         )
-        disposable.add(
-            addNote(Note(
-                2,
-                title = "Title",
-                content = "Content",
-                timestamp = 203920,
-                isFixed = true
-            ))
-        )
-        disposable.add(getNotes())
+
+        getNotes()
     }
 
     fun onEvent(event: NotesEvent) {
         when (event) {
             is NotesEvent.DeleteNote -> {
-                disposable.add(deleteNote(event.note))
+                deleteNote(event.note)
             }
             is NotesEvent.RestoreNote -> {
-                disposable.add(addNote(recentlyDeletedNote ?: return))
+                addNote(recentlyDeletedNote ?: return)
             }
         }
     }
 
-    private fun getNotes(): @NonNull Disposable {
-        return noteUseCases.getNotesUseCase()
+    private fun getNotes() {
+        noteUseCases.getNotesUseCase()
             .androidAsync()
             .subscribe({ notes ->
                 _state.value = state.value.copy(
-                    notes = notes.map { it.toDto() }
+                    notes = notes.map { it.toDto() }.groupBy { it.isFixed }
                 )
-            }, {
-                println(it.localizedMessage)
-            })
+                _state.value.isLoading = false
+            }, {})
+            .addToDisposable(disposable)
     }
 
-    private fun addNote(note: Note): @NonNull Disposable {
-        return noteUseCases.addNoteUseCase(note)
+    private fun addNote(note: Note) {
+        noteUseCases.addNoteUseCase(note)
             .androidAsync()
             .subscribe({
                 recentlyDeletedNote = null
-            }, {
-                println(it.localizedMessage)
-            })
+            }, {})
+            .addToDisposable(disposable)
     }
 
-    private fun deleteNote(note: Note): @NonNull Disposable {
-        return noteUseCases.deleteNoteUseCase(note)
+    private fun deleteNote(note: Note) {
+        noteUseCases.deleteNoteUseCase(note)
             .androidAsync()
             .subscribe({
-                disposable.add(getNotes())
+                getNotes()
                 recentlyDeletedNote = note
-            }, {
-                println(it.localizedMessage)
-            })
+            }, {})
+            .addToDisposable(disposable)
     }
 
     override fun onCleared() {

@@ -8,4 +8,5 @@ dependencyResolutionManagement {
 rootProject.name = "notes"
 include(":app")
 include(":core")
-include(":domain")
+include(":database")
+include(":api")

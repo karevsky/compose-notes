@@ -7,17 +7,18 @@ import androidx.compose.runtime.Composable
 private val LightColorPalette = lightColors(
     primary = Gray800,
     primaryVariant = Gray500,
+    onPrimary = White,
     secondary = Indigo200,
     secondaryVariant = Indigo500,
-    onPrimary = White,
     onSecondary = Black,
     error = Red,
     onError = White,
-    background = White
+    background = Gray200,
+    surface = White
 )
 
 @Composable
-fun NotesTheme(darkTheme: Boolean = false,  content: @Composable () -> Unit) {
+fun NotesTheme( content: @Composable () -> Unit) {
     MaterialTheme(
         colors = LightColorPalette,
         typography = Typography,

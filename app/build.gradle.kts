@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -38,7 +39,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.0.3"
+        kotlinCompilerExtensionVersion = Versions.compose
     }
     packagingOptions {
         resources {
@@ -51,33 +52,33 @@ dependencies {
 
     //project
     implementation(project(":core"))
-    implementation(project(":domain"))
-
+    implementation(project(":database"))
+    implementation(project(":api"))
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
     implementation(AndroidX.lifecycle)
     implementation(AndroidX.activity)
     implementation(Android.material)
-
     implementation(Compose.material)
     implementation(Compose.runtime)
     implementation(Compose.toolingPreview)
     implementation(Compose.ui)
     implementation(Compose.livedata)
     implementation(Compose.rxjava)
-    debugImplementation(Compose.toolingDebug)
-
+    implementation(Compose.icons)
     implementation(Navigation.navCompose)
     implementation(Navigation.navHilt)
-
     implementation(Room.ktx)
     implementation(Room.runtime)
     implementation(Room.rxjava3)
-    kapt(Room.compiler)
-
     implementation(Hilt.android)
-    kapt(Hilt.compiler)
-
     implementation(RxJava3.rxjava)
     implementation(RxJava3.rxandroid)
+    implementation(platform(Firebase.bom))
+    implementation(Firebase.auth)
+
+    debugImplementation(Compose.toolingDebug)
+
+    kapt(Room.compiler)
+    kapt(Hilt.compiler)
 }

@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.karevksy.domain.model.dto.Note
+import com.karevksy.core.model.dto.Note
 
 @Composable
 fun NoteItem(
@@ -27,8 +27,15 @@ fun NoteItem(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(top = 10.dp, end = 10.dp, start = 10.dp)
-            .background(MaterialTheme.colors.background, shape = RoundedCornerShape(cornerRadius))
+            .padding(
+                top = 10.dp,
+                end = 10.dp,
+                start = 10.dp
+            )
+            .background(
+                MaterialTheme.colors.surface,
+                shape = RoundedCornerShape(cornerRadius)
+            )
             .clickable(onClick = onNoteClick)
     ) {
         Column(
@@ -37,7 +44,12 @@ fun NoteItem(
         ) {
             Text(
                 modifier = Modifier
-                    .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 10.dp)
+                    .padding(
+                        start = 16.dp,
+                        end = 10.dp,
+                        top = 10.dp,
+                        bottom = 10.dp
+                    )
                     .padding(end = 32.dp),
                 text = note.title,
                 style = MaterialTheme.typography.h6,
@@ -48,7 +60,12 @@ fun NoteItem(
             Divider()
             Text(
                 modifier = Modifier
-                    .padding(start = 16.dp, end = 16.dp, top = 10.dp, bottom = 16.dp)
+                    .padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        top = 10.dp,
+                        bottom = 16.dp
+                    )
                     .padding(end = 32.dp),
                 text = note.content,
                 style = MaterialTheme.typography.body1,
@@ -59,7 +76,7 @@ fun NoteItem(
         }
         IconButton(
             onClick = onDeleteClick,
-            modifier = Modifier.align(Alignment.BottomEnd)
+            modifier = Modifier.align(Alignment.TopEnd)
         ) {
             Icon(
                 imageVector = Icons.Default.Delete,

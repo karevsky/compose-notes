@@ -11,6 +11,7 @@ val Teal200 = Color(0xFF03DAC5)
 val Gray800 = Color(0xFF424242)
 val Gray500 = Color(0xFF6d6d6d)
 val Gray900 = Color(0xFF1b1b1b)
+val Gray200 = Color(0xFFeeeeee)
 
 //Secondary
 val Indigo200 = Color(0xFF9fa8da)
