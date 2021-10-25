@@ -1,4 +1,4 @@
-package com.karevksy.notes.features.notes.components
+package com.karevksy.notes.features.notes.main.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -20,9 +20,12 @@ fun Title(isFixed: Boolean) {
             .background(MaterialTheme.colors.background)
     ) {
         Text(
+            modifier = Modifier.padding(
+                start = 10.dp,
+                end = 16.dp,
+                top = 10.dp
+            ),
             text = if (isFixed) "Закрепленные" else "Все",
-            modifier = Modifier
-                .padding(start = 10.dp, end = 16.dp, top = 10.dp),
             style = MaterialTheme.typography.h4,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.onBackground

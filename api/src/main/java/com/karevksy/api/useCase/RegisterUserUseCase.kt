@@ -1,7 +1,9 @@
 package com.karevksy.api.useCase
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import android.content.Context
+import com.google.firebase.auth.*
+import com.karevksy.api.R
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 interface RegisterUserUseCase {
@@ -9,26 +11,24 @@ interface RegisterUserUseCase {
         email: String,
         password: String,
         onSuccess: (user: FirebaseUser?) -> Unit,
-        onError: (error: Exception?) -> Unit
+        onError: (exception: FirebaseAuthException) -> Unit,
     )
 }
 
 class RegisterUserUseCaseImpl @Inject constructor(
-    private val auth: FirebaseAuth
+    private val auth: FirebaseAuth,
 ) : RegisterUserUseCase {
+
     override fun invoke(
         email: String,
         password: String,
         onSuccess: (user: FirebaseUser?) -> Unit,
-        onError: (error: Exception?) -> Unit
+        onError: (exception: FirebaseAuthException) -> Unit,
     ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    onSuccess(auth.currentUser)
-                } else {
-                    onError(task.exception)
-                }
+                if (task.isSuccessful) { onSuccess(auth.currentUser) }
+                else { onError(task.exception as FirebaseAuthException) }
             }
     }
 }

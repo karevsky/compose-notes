@@ -1,4 +1,4 @@
-package com.karevksy.notes.features.notes.components
+package com.karevksy.notes.features.notes.main.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,8 +17,8 @@ import com.karevksy.core.model.dto.Note
 
 @Composable
 fun NoteItem(
-    note: Note,
     modifier: Modifier = Modifier,
+    note: Note,
     cornerRadius: Dp = 16.dp,
     onNoteClick: () -> Unit,
     onDeleteClick: () -> Unit

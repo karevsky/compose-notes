@@ -1,4 +1,4 @@
-package com.karevksy.notes.features.createNote
+package com.karevksy.notes.features.notes.createNote
 
 import com.karevksy.core.model.dto.Note
 

@@ -1,11 +1,17 @@
 package com.karevksy.notes.di
 
 import android.app.Application
+import android.content.Context
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import androidx.room.PrimaryKey
 import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.karevksy.api.GetErrorCodeMessage
+import com.karevksy.api.GetErrorCodeMessageImpl
 import com.karevksy.api.useCase.*
 import com.karevksy.domain.data.NoteDatabase
 import com.karevksy.domain.repository.NoteRepository
@@ -15,7 +21,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
+import javax.inject.Singleton
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -51,7 +59,9 @@ object AppModule {
 
     @Provides
     @ViewModelScoped
-    fun provideFirebaseAuthUseCases(firebaseAuth: FirebaseAuth): FirebaseAuthUseCases =
+    fun provideFirebaseAuthUseCases(
+        firebaseAuth: FirebaseAuth,
+    ): FirebaseAuthUseCases =
         FirebaseAuthUseCases(
             authenticateUserUseCase = AuthenticateUserUseCaseImpl(firebaseAuth),
             registerUserUseCase = RegisterUserUseCaseImpl(firebaseAuth),

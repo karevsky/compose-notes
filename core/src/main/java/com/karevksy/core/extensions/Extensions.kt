@@ -1,7 +1,12 @@
 package com.karevksy.core.extensions
 
+import android.widget.Toast
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCompositionContext
+import androidx.compose.ui.platform.LocalContext
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -17,6 +22,10 @@ fun Completable.androidAsync(subscribeOn: Scheduler = Schedulers.io()): Completa
     this.observeOn(AndroidSchedulers.mainThread())
         .subscribeOn(subscribeOn)
 
-fun Disposable.addToDisposable(disposable: CompositeDisposable){
+fun <T> Observable<T>.androidAsync(subscribeOn: Scheduler = Schedulers.io()): Observable<T> =
+    this.observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(subscribeOn)
+
+fun Disposable.addToDisposable(disposable: CompositeDisposable) {
     disposable.add(this)
 }

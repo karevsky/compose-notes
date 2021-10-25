@@ -4,6 +4,7 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -58,6 +59,7 @@ dependencies {
     implementation(Compose.ui)
     implementation(Compose.livedata)
     implementation(Compose.rxjava)
+    implementation(Compose.icons)
     debugImplementation(Compose.toolingDebug)
 
     implementation(Navigation.navCompose)

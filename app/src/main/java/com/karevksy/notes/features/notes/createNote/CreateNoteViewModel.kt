@@ -1,4 +1,4 @@
-package com.karevksy.notes.features.createNote
+package com.karevksy.notes.features.notes.createNote
 
 import androidx.lifecycle.ViewModel
 import com.karevksy.domain.useCase.NoteUseCases

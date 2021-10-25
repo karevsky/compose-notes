@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="invalid_email">Неверный формат почты</string>
+    <string name="weak_password">Слишком слабый пароль</string>
+    <string name="default_error">Ошибка</string>
+    <string name="password_not_identical">Пароли не совпадают</string>
+    <string name="email_collision_error">Почта уже используется</string>
+</resources>
