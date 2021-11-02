@@ -1,7 +1,7 @@
 package com.karevksy.notes.features.auth.components
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -9,16 +9,18 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.karevksy.core.util.Constants
-import com.karevksy.core.util.InputWrapper
+import com.karevksy.core.utils.Constants
+import com.karevksy.core.utils.InputWrapper
 
 @Composable
 fun EmailTextField(
     modifier: Modifier = Modifier,
     input: InputWrapper,
     onValueChanged: (String) -> Unit,
-    label: String = "Почта"
+    label: String = "Почта",
+    errorTextModifier: Modifier = Modifier.padding(start = 20.dp)
 ) {
     Column {
         TextField(
@@ -31,6 +33,7 @@ fun EmailTextField(
             isError = input.isError()
         )
         Text(
+            modifier = errorTextModifier,
             text = if (input.isError()) input.error!! else Constants.EMPTY_STRING,
             color = MaterialTheme.colors.error,
             fontSize = 12.sp

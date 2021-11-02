@@ -6,7 +6,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.karevksy.core.util.Constants
+import com.karevksy.core.utils.Constants
 
 @Composable
 fun NotesFloatingActionButton(

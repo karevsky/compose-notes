@@ -1,7 +1,7 @@
 package com.karevksy.notes.features.auth.components
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -16,9 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.karevksy.core.util.Constants
-import com.karevksy.core.util.InputWrapper
+import com.karevksy.core.utils.Constants
+import com.karevksy.core.utils.InputWrapper
 
 @Composable
 fun PasswordTextField(
@@ -26,6 +27,7 @@ fun PasswordTextField(
     input: InputWrapper,
     onValueChange: (String) -> Unit,
     label: String = "Пароль",
+    errorTextModifier: Modifier = Modifier.padding(start = 20.dp)
 ) {
     var passwordHidden by rememberSaveable { mutableStateOf(true) }
 
@@ -50,6 +52,7 @@ fun PasswordTextField(
             else VisualTransformation.None
         )
         Text(
+            modifier = errorTextModifier,
             text = if (input.isError()) input.error!! else Constants.EMPTY_STRING,
             color = MaterialTheme.colors.error,
             fontSize = 12.sp

@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 @ExperimentalFoundationApi
 @Composable
 fun NotesScreen(
-    viewModel: NotesViewModel = hiltViewModel(),
+    viewModel: NotesViewModel,
     navController: NavController
 ) {
     val uiState = viewModel.uiState.observeAsState().value
@@ -38,7 +38,7 @@ fun NotesScreen(
         floatingActionButton = {
             NotesFloatingActionButton(
                 icon = Icons.Default.Add,
-                action = { navController.navigate(Screens.NotesScreen.route) },
+                action = { viewModel.addRandNote() },
                 imageDescription = "Добавить заметку"
             )
         }
