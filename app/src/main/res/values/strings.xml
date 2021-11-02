@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">notes</string>
+    <string name="notes">Заметки</string>
+    <string name="sign_in">Вход</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="sign_in_local">Продолжить без авторизации</string>
 </resources>

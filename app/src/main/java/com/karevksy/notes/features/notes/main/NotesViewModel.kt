@@ -3,11 +3,13 @@ package com.karevksy.notes.features.notes.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.karevksy.core.base.BaseViewModel
-import com.karevksy.core.extensions.addToDisposable
-import com.karevksy.core.extensions.androidAsync
+import com.karevksy.core.utils.addToDisposable
+import com.karevksy.core.utils.androidAsync
 import com.karevksy.core.model.dto.Note
-import com.karevksy.core.util.Constants
-import com.karevksy.domain.useCase.NoteUseCases
+import com.karevksy.core.utils.Constants
+import com.karevksy.domain.database.useCase.notes.AddNoteUseCase
+import com.karevksy.domain.database.useCase.notes.DeleteNoteUseCase
+import com.karevksy.domain.database.useCase.notes.GetNotesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -25,7 +27,9 @@ data class NotesState(
 
 @HiltViewModel
 class NotesViewModel @Inject constructor(
-    private val noteUseCases: NoteUseCases
+    private val addNoteUseCase: AddNoteUseCase,
+    private val deleteNoteUseCase: DeleteNoteUseCase,
+    private val getNotesUseCase: GetNotesUseCase
 ) : BaseViewModel() {
 
     private val _uiState = MutableLiveData(NotesState())
@@ -34,23 +38,6 @@ class NotesViewModel @Inject constructor(
     private var recentlyDeletedNote: Note? = null
 
     init {
-        addNote(
-            Note(
-                id = 0,
-                content = "content",
-                title = "title",
-                timestamp = 2
-            )
-        )
-        addNote(
-            Note(
-                id = 2,
-                content = "content",
-                title = "title",
-                timestamp = 2,
-                isFixed = true
-            )
-        )
         getNotes()
     }
 
@@ -66,12 +53,11 @@ class NotesViewModel @Inject constructor(
     }
 
     private fun getNotes() {
-        noteUseCases.getNotesUseCase()
+        getNotesUseCase()
             .androidAsync()
             .subscribe { notes ->
                 _uiState.value = uiState.value?.copy(
-                    notes = notes
-                        .map { it.toDto() }
+                    notes = notes.map { it.toDto() }
                         .groupBy { it.isFixed },
                     loading = false
                 )
@@ -80,7 +66,7 @@ class NotesViewModel @Inject constructor(
     }
 
     private fun addNote(note: Note) {
-        noteUseCases.addNoteUseCase(note)
+        addNoteUseCase(note)
             .androidAsync()
             .subscribe {
                 getNotes()
@@ -90,7 +76,7 @@ class NotesViewModel @Inject constructor(
     }
 
     private fun deleteNote(note: Note) {
-        noteUseCases.deleteNoteUseCase(note)
+        deleteNoteUseCase(note)
             .androidAsync()
             .subscribe {
                 getNotes()
@@ -102,5 +88,16 @@ class NotesViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()
+    }
+
+    fun addRandNote() {
+        addNote(
+            Note(
+                id = (0..100).random(),
+                content = "content",
+                title = "title",
+                timestamp = 2
+            )
+        )
     }
 }
