@@ -21,4 +21,7 @@ interface NoteDao {
 
     @Delete
     fun deleteNote(note: NoteEntity): Completable
+
+    @Query("DELETE FROM note WHERE id = :id")
+    fun deleteNoteById(id: Int): Completable
 }

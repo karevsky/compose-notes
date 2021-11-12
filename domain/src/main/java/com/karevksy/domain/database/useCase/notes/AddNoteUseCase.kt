@@ -1,6 +1,7 @@
 package com.karevksy.domain.database.useCase.notes
 
 import com.karevksy.core.model.dto.Note
+import com.karevksy.core.model.entity.NoteEntity
 import com.karevksy.domain.database.repository.NoteRepository
 import io.reactivex.rxjava3.core.Completable
 

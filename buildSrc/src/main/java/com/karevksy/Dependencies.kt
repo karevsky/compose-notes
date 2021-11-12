@@ -7,6 +7,7 @@ object Versions {
     const val versionName = "1.0"
 
     const val firebaseBom = "28.4.2"
+    const val landscapist = "1.4.1"
     const val firebaseServices = "4.3.10"
     const val kotlin = "1.5.30"
     const val coreKtx = "1.5.0"
@@ -17,14 +18,23 @@ object Versions {
     const val activity = "1.3.1"
     const val navigation = "2.4.0-alpha01"
     const val rxjava3 = "3.1.1"
+    const val serialization = "1.3.0"
     const val rxandroid = "3.0.0"
     const val hilt = "2.38.1"
     const val room = "2.3.0"
     const val hiltNavigation = "1.0.0-alpha03"
+    const val swipeRefreshLayout = "0.21.2-beta"
 }
 
 object Android {
     const val material = "com.google.android.material:material:${Versions.material}"
+    const val landscapist = "com.github.skydoves:landscapist-glide:${Versions.landscapist}"
+    const val swipeRefreshLayout = "com.google.accompanist:accompanist-swiperefresh:${Versions.swipeRefreshLayout}"
+}
+
+object Kotlin {
+    const val serializationPlugin = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
+    const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}"
 }
 
 object Navigation {
@@ -37,6 +47,7 @@ object AndroidX {
     const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
     const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val activity = "androidx.activity:activity-compose:${Versions.activity}"
+    const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}"
 }
 
 object Hilt {

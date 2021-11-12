@@ -14,12 +14,12 @@ import androidx.navigation.NavController
 import com.karevksy.core.ui.components.DefaultButton
 import com.karevksy.core.ui.components.ScreenLoader
 import com.karevksy.core.ui.components.TextButton
+import com.karevksy.core.utils.Screens
 import com.karevksy.core.utils.observeEvent
 import com.karevksy.notes.R
 import com.karevksy.notes.features.auth.components.EmailTextField
 import com.karevksy.notes.features.auth.components.PasswordTextField
 import com.karevksy.notes.features.auth.signUp.SignUpViewModel
-import com.karevksy.notes.features.util.Screens
 
 @Composable
 fun SignUpScreen(viewModel: SignUpViewModel, navController: NavController) {

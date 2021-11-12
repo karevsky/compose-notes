@@ -59,6 +59,10 @@ object AppModule {
     fun provideGetNotesUseCase(noteRepository: NoteRepository): GetNotesUseCase =
         GetNotesUseCaseImpl(noteRepository)
 
+    @Provides
+    @ViewModelScoped
+    fun provideDeleteNoteByIdUseCase(noteRepository: NoteRepository): DeleteNoteByIdUseCase =
+        DeleteNoteByIdUseCaseImpl(noteRepository)
 
     //User UseCases
     @Provides

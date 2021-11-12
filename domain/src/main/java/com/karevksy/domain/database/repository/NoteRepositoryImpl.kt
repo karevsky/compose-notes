@@ -11,6 +11,7 @@ interface NoteRepository {
     fun getNoteByIsFixed(isFixed: Boolean): Single<List<NoteEntity>>
     fun insertNote(note: NoteEntity): Completable
     fun deleteNote(note: NoteEntity): Completable
+    fun deleteNoteById(id: Int): Completable
 }
 
 class NoteRepositoryImpl(
@@ -30,4 +31,7 @@ class NoteRepositoryImpl(
 
     override fun deleteNote(note: NoteEntity): Completable =
         dao.deleteNote(note)
+
+    override fun deleteNoteById(id: Int): Completable =
+        dao.deleteNoteById(id)
 }

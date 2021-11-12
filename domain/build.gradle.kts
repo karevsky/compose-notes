@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
+    kotlin("plugin.serialization")
     id("dagger.hilt.android.plugin")
 }
 
@@ -44,6 +45,7 @@ dependencies {
     implementation(Room.ktx)
     implementation(Room.runtime)
     implementation(Room.rxjava3)
+    implementation(Kotlin.serialization)
     kapt(Room.compiler)
 
     implementation(Hilt.android)

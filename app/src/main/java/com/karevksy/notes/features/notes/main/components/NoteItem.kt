@@ -7,7 +7,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -23,6 +26,8 @@ fun NoteItem(
     onNoteClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
+    val isNoteContentEmpty = note.isContentEmpty()
+
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -50,7 +55,7 @@ fun NoteItem(
                         top = 10.dp,
                         bottom = 10.dp
                     )
-                    .padding(end = 32.dp),
+                    .padding(end = 90.dp),
                 text = note.title,
                 style = MaterialTheme.typography.h6,
                 color = MaterialTheme.colors.onSecondary,
@@ -69,20 +74,37 @@ fun NoteItem(
                     .padding(end = 32.dp),
                 text = note.content,
                 style = MaterialTheme.typography.body1,
-                color = MaterialTheme.colors.onSecondary,
+                color = if (isNoteContentEmpty) {
+                    MaterialTheme.colors.primaryVariant
+                } else { MaterialTheme.colors.onSecondary },
                 maxLines = 7,
                 overflow = TextOverflow.Ellipsis
             )
         }
-        IconButton(
-            onClick = onDeleteClick,
-            modifier = Modifier.align(Alignment.TopEnd)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Delete,
-                contentDescription = "Delete",
-                tint = MaterialTheme.colors.primary
-            )
+        Row(modifier = Modifier.align(Alignment.TopEnd), verticalAlignment = Alignment.CenterVertically) {
+            note.images?.let {
+                Text(
+                    text = it.size.toString(),
+                    color = MaterialTheme.colors.primaryVariant
+                )
+                Icon(
+                    modifier = Modifier.padding(start = 2.dp),
+                    imageVector = Icons.Default.Image,
+                    contentDescription = "Images",
+                    tint = MaterialTheme.colors.primaryVariant
+                )
+            }
+
+            IconButton(
+                onClick = onDeleteClick
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete",
+                    tint = MaterialTheme.colors.primary
+                )
+            }
         }
+
     }
 }
