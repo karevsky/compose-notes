@@ -1,4 +1,4 @@
-package com.karevksy.notes.features.util
+package com.karevksy.core.utils
 
 sealed class Screens(val route: String) {
     object NotesScreen: Screens("notes_screen")

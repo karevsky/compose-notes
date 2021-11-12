@@ -5,4 +5,13 @@
     <string name="sign_up">Регистрация</string>
     <string name="sign_in_local">Продолжить без авторизации</string>
     <string name="invalid_credentials">Неверная почта или e-mail</string>
+    <string name="create_note">Создание заметки</string>
+    <string name="ic_add_image">Add image from gallery</string>
+    <string name="load_image_error">Ошибка при загрузке фото</string>
+    <string name="description">Описание</string>
+    <string name="note_title">Заголовок заметки</string>
+    <string name="save_note">Сохранить заметку</string>
+    <string name="notes_is_empty">Заметки отсутствуют</string>
+    <string name="touch_to_add_new_note">Нажмите чтобы добавить новую</string><string name="note_deleted">Заметка удалена</string>
+    <string name="add_note">Добавить заметку</string>
 </resources>

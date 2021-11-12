@@ -1,11 +1,11 @@
 package com.karevksy.core.utils
 
-import android.widget.Toast
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Observer
 
 @Composable
-fun LiveEvent.observeEvent(observer: (Unit) -> Unit) {
+fun <T> LiveDataEvent<T>.observeEvent(observer: (T) -> Unit) {
     this.observe(LocalLifecycleOwner.current, observer)
 }

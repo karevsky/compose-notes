@@ -9,5 +9,6 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30")
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.39.1")
         classpath(Firebase.services)
+        classpath(Kotlin.serializationPlugin)
     }
 }

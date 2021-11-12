@@ -59,6 +59,8 @@ dependencies {
     implementation(AndroidX.lifecycle)
     implementation(AndroidX.activity)
     implementation(Android.material)
+    implementation(Android.landscapist)
+    implementation(Android.swipeRefreshLayout)
     implementation(Compose.material)
     implementation(Compose.runtime)
     implementation(Compose.toolingPreview)

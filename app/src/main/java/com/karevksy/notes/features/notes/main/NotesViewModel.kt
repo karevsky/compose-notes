@@ -1,66 +1,54 @@
 package com.karevksy.notes.features.notes.main
 
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.karevksy.core.base.BaseViewModel
-import com.karevksy.core.utils.addToDisposable
-import com.karevksy.core.utils.androidAsync
 import com.karevksy.core.model.dto.Note
-import com.karevksy.core.utils.Constants
-import com.karevksy.domain.database.useCase.notes.AddNoteUseCase
-import com.karevksy.domain.database.useCase.notes.DeleteNoteUseCase
-import com.karevksy.domain.database.useCase.notes.GetNotesUseCase
+import com.karevksy.core.utils.*
+import com.karevksy.domain.database.useCase.notes.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-
-sealed class NotesEvent {
-    data class DeleteNote(val note: Note) : NotesEvent()
-    object RestoreNote : NotesEvent()
-}
-
-data class NotesState(
-    var notes: Map<Boolean, List<Note>> = emptyMap(),
-    var toastMessage: String = Constants.EMPTY_STRING,
-    var snackMessage: String = Constants.EMPTY_STRING,
-    var loading: Boolean = true
-)
 
 @HiltViewModel
 class NotesViewModel @Inject constructor(
     private val addNoteUseCase: AddNoteUseCase,
-    private val deleteNoteUseCase: DeleteNoteUseCase,
-    private val getNotesUseCase: GetNotesUseCase
+    private val deleteNoteByIdUseCase: DeleteNoteByIdUseCase,
+    private val getNotesUseCase: GetNotesUseCase,
+    private val getNoteByIdUseCase: GetNoteByIdUseCase
 ) : BaseViewModel() {
 
-    private val _uiState = MutableLiveData(NotesState())
-    val uiState: LiveData<NotesState> = _uiState
+    var isRefreshing by mutableStateOf(false)
+    var notes: Map<Boolean, List<Note>> by mutableStateOf(emptyMap())
+    var showSnackbar = LiveDataEvent<String>()
 
     private var recentlyDeletedNote: Note? = null
 
     init {
+        loading = true
         getNotes()
     }
 
-    fun onEvent(event: NotesEvent) {
-        when (event) {
-            is NotesEvent.DeleteNote -> {
-                deleteNote(event.note)
-            }
-            is NotesEvent.RestoreNote -> {
-                recentlyDeletedNote?.let { addNote(it) }
-            }
-        }
+    fun onDeleteNoteClick(id: Int) {
+        deleteNote(id)
+    }
+
+    fun onRestoreNoteClick() {
+        recentlyDeletedNote?.let { addNote(it) }
     }
 
     private fun getNotes() {
         getNotesUseCase()
             .androidAsync()
             .subscribe { notes ->
-                _uiState.value = uiState.value?.copy(
-                    notes = notes.map { it.toDto() }
-                        .groupBy { it.isFixed },
-                    loading = false
-                )
+                loading = false
+                isRefreshing = false
+                this.notes = notes.map { it.toDto() }
+                    .sortedByDescending { it.timestamp }
+                    .groupBy { it.isFixed }
             }
             .addToDisposable(compositeDisposable)
     }
@@ -75,29 +63,32 @@ class NotesViewModel @Inject constructor(
             .addToDisposable(compositeDisposable)
     }
 
-    private fun deleteNote(note: Note) {
-        deleteNoteUseCase(note)
+    private fun deleteNote(id: Int) {
+        getNoteByIdUseCase(id)
             .androidAsync()
+            .flatMapCompletable { note ->
+                recentlyDeletedNote = note
+                deleteNoteByIdUseCase(id)
+                    .androidAsync()
+            }
             .subscribe {
                 getNotes()
-                recentlyDeletedNote = note
+                showSnackbar("Метка удалена")
             }
             .addToDisposable(compositeDisposable)
+    }
+
+    fun onAddNoteClick() {
+        navigateTo.invoke(Screens.CreateNoteScreen)
+    }
+
+    fun refreshNotes() {
+        isRefreshing = true
+        getNotes()
     }
 
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()
-    }
-
-    fun addRandNote() {
-        addNote(
-            Note(
-                id = (0..100).random(),
-                content = "content",
-                title = "title",
-                timestamp = 2
-            )
-        )
     }
 }

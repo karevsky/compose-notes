@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
@@ -28,7 +29,8 @@ fun Title(isFixed: Boolean) {
             text = if (isFixed) "Закрепленные" else "Все",
             style = MaterialTheme.typography.h4,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colors.onBackground
+            color = MaterialTheme.colors.onBackground,
+            fontFamily = FontFamily.Monospace
         )
     }
 
