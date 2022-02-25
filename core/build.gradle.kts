@@ -47,12 +47,18 @@ android {
 }
 
 dependencies {
+    /**
+     * CORE
+     */
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
     implementation(AndroidX.lifecycle)
     implementation(AndroidX.activity)
-    implementation(Android.material)
 
+    /**
+     * UI
+     */
+    implementation(Android.material)
     implementation(Compose.material)
     implementation(Compose.runtime)
     implementation(Compose.toolingPreview)
@@ -62,19 +68,31 @@ dependencies {
     implementation(Compose.icons)
     debugImplementation(Compose.toolingDebug)
 
+    /**
+     * NAVIGATION
+     */
     implementation(Navigation.navCompose)
     implementation(Navigation.navHilt)
 
+    /**
+     * DATABASE
+     */
     implementation(Room.ktx)
     implementation(Room.runtime)
     implementation(Room.rxjava3)
     kapt(Room.compiler)
 
+    /**
+     * DI
+     */
+    implementation(RxJava3.rxjava)
+    implementation(RxJava3.rxandroid)
     implementation(Hilt.android)
     kapt(Hilt.compiler)
 
-    implementation(RxJava3.rxjava)
-    implementation(RxJava3.rxandroid)
+    /**
+     * FIREBASE
+     */
     implementation(platform(Firebase.bom))
     implementation(Firebase.auth)
 }

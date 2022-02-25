@@ -51,13 +51,23 @@ android {
 
 dependencies {
 
-    //project
+    /**
+     * MODULES
+     */
     implementation(project(":core"))
     implementation(project(":domain"))
+
+    /**
+     * CORE
+     */
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
     implementation(AndroidX.lifecycle)
     implementation(AndroidX.activity)
+
+    /**
+     * UI
+     */
     implementation(Android.material)
     implementation(Android.landscapist)
     implementation(Android.swipeRefreshLayout)
@@ -68,19 +78,34 @@ dependencies {
     implementation(Compose.livedata)
     implementation(Compose.rxjava)
     implementation(Compose.icons)
+
+    /**
+     * NAVIGATION
+     */
     implementation(Navigation.navCompose)
     implementation(Navigation.navHilt)
+
+    /**
+     * DATABASE
+     */
     implementation(Room.ktx)
     implementation(Room.runtime)
     implementation(Room.rxjava3)
+    kapt(Room.compiler)
+
+    /**
+     * DI
+     */
     implementation(Hilt.android)
     implementation(RxJava3.rxjava)
     implementation(RxJava3.rxandroid)
+    kapt(Hilt.compiler)
+
+    /**
+     * FIREBASE
+     */
     implementation(platform(Firebase.bom))
     implementation(Firebase.auth)
 
     debugImplementation(Compose.toolingDebug)
-
-    kapt(Room.compiler)
-    kapt(Hilt.compiler)
 }

@@ -38,22 +38,36 @@ android {
 
 dependencies {
 
+    /**
+     * MODULES
+     */
     implementation(project(":core"))
 
+    /**
+     * CORE
+     */
     implementation(AndroidX.coreKtx)
 
+    /**
+     * DATABASE
+     */
     implementation(Room.ktx)
     implementation(Room.runtime)
     implementation(Room.rxjava3)
     implementation(Kotlin.serialization)
     kapt(Room.compiler)
 
+    /**
+     * DI
+     */
     implementation(Hilt.android)
-    kapt(Hilt.compiler)
-
     implementation(RxJava3.rxjava)
     implementation(RxJava3.rxandroid)
+    kapt(Hilt.compiler)
 
+    /**
+     * FIREBASE
+     */
     implementation(platform(Firebase.bom))
     implementation(Firebase.auth)
 }
